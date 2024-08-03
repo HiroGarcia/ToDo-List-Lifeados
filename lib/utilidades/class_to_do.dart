@@ -1,10 +1,12 @@
+import 'package:flutter/material.dart';
+
 class ToDo {
   bool isMake = false;
   String toDoName;
-  int hour;
+  TimeOfDay selectedTime;
 
   ToDo({
     required this.toDoName,
-    required this.hour,
+    required this.selectedTime,
   });
 }

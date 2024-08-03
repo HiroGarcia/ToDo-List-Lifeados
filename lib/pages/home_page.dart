@@ -14,25 +14,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final TextEditingController _controller1 = TextEditingController();
-  // ignore: unused_field
-  // final TextEditingController _controller2 = TextEditingController();
+
   List<ToDo> toDoList = [
-    ToDo(toDoName: 'toDoName', hour: 5),
+    ToDo(
+        toDoName: 'toDoName',
+        selectedTime: const TimeOfDay(hour: 20, minute: 20)),
   ];
 
-  @override
-  // ignore: override_on_non_overriding_member
-  void _saveNewTask() {
-    // ignore: unused_local_variable
-    var name = _controller1.text;
-    // var hour = _controller2.text;
-// ignore: unnecessary_null_comparison
+  void _saveNewTask(String name, TimeOfDay time) {
     if (name.isNotEmpty) {
-      toDoList.add(ToDo(toDoName: name, hour: 5));
+      setState(() {
+        toDoList.add(ToDo(toDoName: name, selectedTime: time));
+      });
       Navigator.of(context).pop();
       _controller1.clear();
     }
-    setState(() {});
   }
 
   void createNewTask() {
@@ -40,11 +36,12 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (context) {
         return DialogBox(
-          controller1: _controller1,
-          // controller2: _controller2,
-          onSave: _saveNewTask,
-          onCancel: () => Navigator.of(context).pop(),
-        );
+            controller1: _controller1,
+            onSave: _saveNewTask,
+            onCancel: () {
+              Navigator.of(context).pop();
+              _controller1.clear();
+            });
       },
     );
   }
@@ -108,6 +105,7 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   return ToDoList(
                     toDoName: toDoList[index].toDoName,
+                    selectedTime: toDoList[index].selectedTime,
                   );
                 },
               ),

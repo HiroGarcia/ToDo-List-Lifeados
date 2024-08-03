@@ -4,10 +4,11 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 // ignore: must_be_immutable
 class ToDoList extends StatelessWidget {
   String toDoName;
-
+  TimeOfDay selectedTime;
   ToDoList({
     super.key,
     required this.toDoName,
+    required this.selectedTime,
   });
 
   @override
@@ -51,9 +52,9 @@ class ToDoList extends StatelessWidget {
                   ),
                 ],
               ),
-              const Text(
-                '6.00 pm',
-                style: TextStyle(
+              Text(
+                '${selectedTime.hourOfPeriod}:${selectedTime.minute}${selectedTime.hour < 12 ? 'am' : 'pm'}',
+                style: const TextStyle(
                   fontFamily: 'Raleway',
                   fontWeight: FontWeight.w400,
                   color: Colors.white,

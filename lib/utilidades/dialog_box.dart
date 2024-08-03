@@ -2,33 +2,54 @@ import 'package:flutter/material.dart';
 import 'button_dialog_box.dart';
 
 // ignore: must_be_immutable
-class DialogBox extends StatelessWidget {
-  // ignore: prefer_typing_uninitialized_variables
-  final controller1;
-  // final controller2;
-  VoidCallback onSave;
-  VoidCallback onCancel;
+class DialogBox extends StatefulWidget {
+  final TextEditingController controller1;
+  final Function(String, TimeOfDay) onSave;
+  final VoidCallback onCancel;
 
-  DialogBox({
+  const DialogBox({
     super.key,
     required this.controller1,
-    // required this.controller2,
     required this.onSave,
     required this.onCancel,
   });
+
+  @override
+  State<DialogBox> createState() => _DialogBoxState();
+}
+
+class _DialogBoxState extends State<DialogBox> {
+  TimeOfDay selectedTime = TimeOfDay.now();
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: selectedTime,
+    );
+    if (picked != null && picked != selectedTime) {
+      setState(() {
+        selectedTime = picked;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: const Color.fromRGBO(21, 21, 21, 1),
       content: SizedBox(
-        height: 130,
+        height: 160,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             TextField(
-              controller: controller1,
+              style: const TextStyle(
+                color: Colors.white,
+                fontFamily: 'Raleway',
+              ),
+              controller: widget.controller1,
               decoration: const InputDecoration(
+                helperStyle: TextStyle(color: Colors.white),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.white,
@@ -52,11 +73,33 @@ class DialogBox extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                MyButton(
+                  text: 'Select Time',
+                  onPressed: () => _selectTime(context),
+                ),
+                Text(
+                  ('${selectedTime.hourOfPeriod}:${selectedTime.minute}${selectedTime.hour < 12 ? 'am' : 'pm'}'),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Raleway',
+                    fontSize: 18,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
                 //save button
-                MyButton(text: 'Save', onPressed: onSave),
+                MyButton(
+                  text: 'Save',
+                  onPressed: () {
+                    widget.onSave(widget.controller1.text, selectedTime);
+                  },
+                ),
 
                 //cancel button
-                MyButton(text: 'Cancel', onPressed: onCancel),
+                MyButton(text: 'Cancel', onPressed: widget.onCancel),
               ],
             ),
           ],
