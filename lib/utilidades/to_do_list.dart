@@ -5,10 +5,17 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 class ToDoList extends StatelessWidget {
   String toDoName;
   TimeOfDay selectedTime;
+  bool taskCompleted;
+  Function(bool?)? onChanged;
+  Function(BuildContext)? deleteFunction;
+
   ToDoList({
     super.key,
     required this.toDoName,
     required this.selectedTime,
+    required this.taskCompleted,
+    required this.onChanged,
+    required this.deleteFunction,
   });
 
   @override
@@ -18,7 +25,7 @@ class ToDoList extends StatelessWidget {
       child: Slidable(
         endActionPane: ActionPane(motion: const StretchMotion(), children: [
           SlidableAction(
-            onPressed: (context) {},
+            onPressed: deleteFunction,
             icon: Icons.delete,
             backgroundColor: const Color.fromARGB(255, 82, 79, 79),
             borderRadius: BorderRadius.circular(10),
@@ -37,28 +44,36 @@ class ToDoList extends StatelessWidget {
                 children: [
                   Checkbox(
                     shape: const CircleBorder(),
-                    value: false,
-                    onChanged: (context) {},
+                    value: taskCompleted,
+                    onChanged: onChanged,
                     activeColor: Colors.black,
                   ),
                   Text(
                     toDoName,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: 'Raleway',
                       fontWeight: FontWeight.w400,
-                      color: Colors.white,
+                      color: taskCompleted ? Colors.grey : Colors.white,
                       fontSize: 18,
+                      decoration: taskCompleted
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                      decorationColor: Colors.grey,
                     ),
                   ),
                 ],
               ),
               Text(
                 '${selectedTime.hourOfPeriod}:${selectedTime.minute}${selectedTime.hour < 12 ? 'am' : 'pm'}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Raleway',
                   fontWeight: FontWeight.w400,
-                  color: Colors.white,
+                  color: taskCompleted ? Colors.grey : Colors.white,
                   fontSize: 12,
+                  decoration: taskCompleted
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
+                  decorationColor: Colors.grey,
                 ),
               ),
             ],

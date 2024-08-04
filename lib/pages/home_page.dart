@@ -21,6 +21,23 @@ class _HomePageState extends State<HomePage> {
         selectedTime: const TimeOfDay(hour: 20, minute: 20)),
   ];
 
+  static List<String> monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
+
+  String mouthNow = monthNames[DateTime.now().month - 1];
+
   void _saveNewTask(String name, TimeOfDay time) {
     if (name.isNotEmpty) {
       setState(() {
@@ -44,6 +61,18 @@ class _HomePageState extends State<HomePage> {
             });
       },
     );
+  }
+
+  void checkBoxChange(bool? value, int index) {
+    setState(() {
+      toDoList[index].isMake = !toDoList[index].isMake;
+    });
+  }
+
+  void deleteTask(int index) {
+    setState(() {
+      toDoList.removeAt(index);
+    });
   }
 
   @override
@@ -87,9 +116,9 @@ class _HomePageState extends State<HomePage> {
                 fontSize: 20,
               ),
             ),
-            const Text(
-              'August 1, 2024',
-              style: TextStyle(
+            Text(
+              '$mouthNow ${DateTime.now().day}, ${DateTime.now().year}',
+              style: const TextStyle(
                 fontFamily: 'Raleway',
                 fontWeight: FontWeight.w400,
                 color: Colors.grey,
@@ -106,6 +135,9 @@ class _HomePageState extends State<HomePage> {
                   return ToDoList(
                     toDoName: toDoList[index].toDoName,
                     selectedTime: toDoList[index].selectedTime,
+                    taskCompleted: toDoList[index].isMake,
+                    onChanged: (value) => checkBoxChange(value, index),
+                    deleteFunction: (context) => deleteTask(index),
                   );
                 },
               ),
