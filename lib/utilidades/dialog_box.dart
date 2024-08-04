@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/utilidades/colors.dart';
 import 'button_dialog_box.dart';
 
 // ignore: must_be_immutable
@@ -25,6 +26,21 @@ class _DialogBoxState extends State<DialogBox> {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: selectedTime,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            timePickerTheme: TimePickerThemeData(
+              hourMinuteTextColor: Colors.white,
+              dialHandColor: const Color.fromRGBO(132, 218, 213, 1),
+              hourMinuteColor: const Color.fromRGBO(32, 31, 31, 1),
+              cancelButtonStyle: TextButton.styleFrom(
+                backgroundColor: Colors.transparent,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
     if (picked != null && picked != selectedTime) {
       setState(() {
