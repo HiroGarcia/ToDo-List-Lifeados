@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/pages/home_page.dart';
+import 'package:to_do_app/pages/splash_screen.dart';
 
 void main() {
   runApp(const ToDoApp());
@@ -10,18 +11,13 @@ class ToDoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
-      // theme: ThemeData(
-      //   primaryColor: Colors.red,
-      //   focusColor: Colors.blue,
-      //   hoverColor: Colors.green,
-      //   indicatorColor: Colors.amber,
-      //   highlightColor: Colors.red,
-      //   primaryColorDark: Colors.green,
-      //   cardColor: Colors.amber,
-      // ),
+      initialRoute: 'SplashScreen',
+      routes: {
+        'SplashScreen': (context) => const SplashScreen(),
+        'HomePage': (context) => const HomePage(),
+      },
     );
   }
 }
