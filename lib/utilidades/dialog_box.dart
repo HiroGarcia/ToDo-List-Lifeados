@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_app/utilidades/colors.dart';
 import 'button_dialog_box.dart';
 
 // ignore: must_be_immutable

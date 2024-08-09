@@ -40,31 +40,36 @@ class ToDoList extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Checkbox(
-                    shape: const CircleBorder(),
-                    value: taskCompleted,
-                    onChanged: onChanged,
-                    activeColor: Colors.black,
-                  ),
-                  Text(
-                    toDoName,
-                    style: TextStyle(
-                      fontFamily: 'Raleway',
-                      fontWeight: FontWeight.w400,
-                      color: taskCompleted ? Colors.grey : Colors.white,
-                      fontSize: 18,
-                      decoration: taskCompleted
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none,
-                      decorationColor: Colors.grey,
+              Checkbox(
+                shape: const CircleBorder(),
+                value: taskCompleted,
+                onChanged: onChanged,
+                activeColor: Colors.black,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      toDoName,
+                      softWrap: true,
+                      overflow: TextOverflow.visible,
+                      style: TextStyle(
+                        fontFamily: 'Raleway',
+                        fontWeight: FontWeight.w400,
+                        color: taskCompleted ? Colors.grey : Colors.white,
+                        fontSize: 18,
+                        decoration: taskCompleted
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                        decorationColor: Colors.grey,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Text(
-                '${selectedTime.hourOfPeriod}:${selectedTime.minute}${selectedTime.hour < 12 ? 'am' : 'pm'}',
+                '${selectedTime.hourOfPeriod}:${selectedTime.minute.toString().padLeft(2, '0')}${selectedTime.hour < 12 ? 'am' : 'pm'}',
                 style: TextStyle(
                   fontFamily: 'Raleway',
                   fontWeight: FontWeight.w400,

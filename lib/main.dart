@@ -13,6 +13,15 @@ class ToDoApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomePage(),
+      // theme: ThemeData(
+      //   primaryColor: Colors.red,
+      //   focusColor: Colors.blue,
+      //   hoverColor: Colors.green,
+      //   indicatorColor: Colors.amber,
+      //   highlightColor: Colors.red,
+      //   primaryColorDark: Colors.green,
+      //   cardColor: Colors.amber,
+      // ),
     );
   }
 }
